@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using WebCrawler.Data.DBContext;
+using WebCrawler.Data.Interfaces;
 using WebCrawler.Data.Services;
 using WebCrawler.Services;
 
@@ -62,8 +63,12 @@ public class Program
                 services.AddDbContext<WebCrawlerContext>(options =>
                     options.UseSqlServer(connectionString));
 
-                services.AddTransient<CrawlerService>();  
+                services.AddTransient<CrawlerService>();
                 services.AddHostedService<CrawlerBackgroundService>();
+
+                services.AddScoped<IHttpClientService, HttpClientService>();
+                services.AddScoped<IHtmlParserService, HtmlParserService>();
+                services.AddScoped<IDatabaseService, DatabaseService>();
 
                 services.AddLogging();
                 services.AddRazorPages();
