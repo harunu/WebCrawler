@@ -37,8 +37,6 @@ namespace WebCrawler.Data.Models
         public string? Email { get; set; }
 
         public string? Phone { get; set; }
-
-        // New fields for address components
         public string? Street { get; set; }
         public string? StreetNumber { get; set; }
         public string? ZipCode { get; set; }

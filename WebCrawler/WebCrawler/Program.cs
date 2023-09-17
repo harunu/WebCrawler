@@ -32,7 +32,6 @@ public class Program
             if (crawlerService != null)
             {
                 crawlerService.SetupDatabase();  // Set up the database first    
-                                                 // await crawlerService.StartCrawling(); // Uncomment this if you want to start crawling immediately
             }
             else
             {
@@ -63,7 +62,7 @@ public class Program
                 services.AddDbContext<WebCrawlerContext>(options =>
                     options.UseSqlServer(connectionString));
 
-                services.AddTransient<CrawlerService>();  // Changed from Scoped to Transient
+                services.AddTransient<CrawlerService>();  
                 services.AddHostedService<CrawlerBackgroundService>();
 
                 services.AddLogging();
