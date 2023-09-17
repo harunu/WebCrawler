@@ -1,0 +1,15 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<form method="post" asp-page-handler="Start">
+    <button type="submit">Start Crawling</button>
+</form>
+
+<form method="post" asp-page-handler="Stop">
+    <button type="submit">Stop Crawling</button>
+</form>
+
+<p>Status: @Model.Status</p>

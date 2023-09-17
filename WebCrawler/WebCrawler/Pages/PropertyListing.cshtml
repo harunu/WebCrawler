@@ -1,0 +1,69 @@
+﻿@page
+@model WebCrawler.Pages.PropertyListingModel
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="mb-4">Property Listings</h1>
+            <table class="table table-bordered table-striped table-sm">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Title</th>
+                        <th>Price</th>
+                        <th>Address</th>
+                        <th>Additional Costs</th>
+                        <th>Contact</th>
+                        <th>Image</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Street</th>
+                        <th>Street Number</th>
+                        <th>Zip Code</th>
+                        <th>City</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var listing in Model.PropertyListings)
+                    {
+                        <tr>
+                            <td>@listing.Id</td>
+                            <td>@listing.Title</td>
+                            <td>@listing.Price</td>
+                            <td>@listing.Address</td>
+                            <td>@listing.AdditionalCosts</td>
+                            <td>@listing.Contact</td>
+                            <td>
+                                <img src="@listing.ImageUrl" alt="Image" width="100" class="img-fluid" />
+                            </td>
+                            <td>@listing.FirstName</td>
+                            <td>@listing.LastName</td>
+                            <td>@listing.Email</td>
+                            <td>@listing.Phone</td>
+                            <td>@listing.Street</td>
+                            <td>@listing.StreetNumber</td>
+                            <td>@listing.ZipCode</td>
+                            <td>@listing.City</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<style>
+    .table-sm th, .table-sm td {
+        font-size: 0.875rem;
+    }
+
+    .img-fluid {
+        max-height: 75px;
+    }
+
+    .container mt-5 {
+        font-size: 0.875rem;
+    }
+</style>
