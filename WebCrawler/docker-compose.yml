@@ -1,0 +1,15 @@
+﻿version: '3.8'
+
+services:
+  webcrawler:
+    image: webcrawler:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+    # volumes:
+    #   - ./WebCrawler:/app

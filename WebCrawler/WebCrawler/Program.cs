@@ -48,20 +48,35 @@ public class Program
         await host.RunAsync();
     }
 
-
-
     public static IHostBuilder CreateHostBuilder(string[] args) =>
     Host.CreateDefaultBuilder(args)
         .ConfigureWebHostDefaults(webBuilder =>
         {
-            webBuilder.ConfigureServices((context, services) =>
+            webBuilder.ConfigureAppConfiguration((hostingContext, config) =>
             {
-
-                var configuration = context.Configuration;
-                var connectionString = configuration.GetConnectionString("DbConnectionString");
-
-                services.AddDbContext<WebCrawlerContext>(options =>
+                var env = hostingContext.HostingEnvironment;
+                config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                      .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
+                if (env.EnvironmentName == "Docker")
+                {
+                    config.AddJsonFile("appsettings.Docker.json", optional: true, reloadOnChange: true);
+                }
+            })
+            .ConfigureServices((context, services) =>
+            {
+                string useSqlite = context.Configuration.GetSection("UseSqlite").Value;
+                if (string.Equals(useSqlite, "true", StringComparison.OrdinalIgnoreCase))
+                {
+                    services.AddDbContext<WebCrawlerContext>(options =>
+                        options.UseSqlite("Data Source=webcrawler.db"));
+                }
+                else
+                {
+                    var configuration = context.Configuration;
+                    var connectionString = configuration.GetConnectionString("DbConnectionString");
+                    services.AddDbContext<WebCrawlerContext>(options =>
                     options.UseSqlServer(connectionString));
+                }
 
                 services.AddTransient<CrawlerService>();
                 services.AddHostedService<CrawlerBackgroundService>();
